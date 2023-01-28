@@ -1,9 +1,10 @@
-/* Original codes from https://start.spring.io/
+/* ===== Original codes from https://start.spring.io/ ===== */
 /*
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.6.7'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "java"
+	id "org.springframework.boot" version "2.6.7"
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+	id "com.github.node-gradle.node" version "3.3.0"
 }
 */
 
@@ -11,10 +12,12 @@ plugins {
 buildscript {
     repositories {
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.7")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.6.7"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        classpath "com.github.node-gradle:gradle-node-plugin:3.3.0"
     }
 }
 
@@ -24,6 +27,7 @@ plugins {
 
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
+apply plugin: "com.github.node-gradle.node"
 /* ====================================================== */
 
 
@@ -38,7 +42,7 @@ repositories {
 
 dependencies {
     // implementation 'org.springframework.boot:spring-boot-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
@@ -50,3 +54,29 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+node {
+    nodeModulesDir = file("$projectDir/front-end")
+    version = '18.3.0'
+    download = true
+}
+
+task npmBuild(type: NpmTask) {
+    args = ['run', "build"]
+}
+
+task copyFrontEnd(type: Copy) {
+    from "$projectDir/front-end/static"
+    into 'build/resources/main/static/.'
+}
+
+task cleanFrontEnd(type: Delete) {
+    delete "$projectDir/front-end/static", "$projectDir/front-end/node_modules"
+}
+
+npmBuild.dependsOn npmInstall
+copyFrontEnd.dependsOn npmBuild
+compileJava.dependsOn copyFrontEnd
+
+clean.dependsOn cleanFrontEnd
