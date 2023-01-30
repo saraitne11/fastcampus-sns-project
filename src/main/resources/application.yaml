@@ -1,14 +1,43 @@
-spring.jpa:
-  database: postgresql
-  hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
-  hibernate.ddl-auto: update
-  properties.hibernate.format_sql: true
-  show-sql: true
+#spring.jpa:
+#  database: postgresql
+#  hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
+#  hibernate.ddl-auto: update
+#  properties.hibernate.format_sql: true
+#  show-sql: true
+#
+#spring.datasource:
+#  hikari.maximum-pool-size: 4
+#  url:
+#  username:
+#  password:
+#  platform: postgres
+#  driver-class-name: org.postgresql.Driver
 
-spring.datasource:
-  hikari.maximum-pool-size: 4
-  url:
-  username:
-  password:
-  platform: postgres
-  driver-class-name: org.postgresql.Driver
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fastcampus_sns_project?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: spring
+    password: spring123
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
