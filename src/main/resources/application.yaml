@@ -1,43 +1,48 @@
-#spring.jpa:
-#  database: postgresql
-#  hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
-#  hibernate.ddl-auto: update
-#  properties.hibernate.format_sql: true
-#  show-sql: true
+jwt:
+  secret-key: fast_campus.sns-application-2023.secret_key
+  # 30 days
+  token.expired-time-ms: 2592000000
+
+spring.jpa:
+  database: postgresql
+  hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
+  hibernate.ddl-auto: update
+  properties.hibernate.format_sql: true
+  show-sql: true
+
+spring.datasource:
+  hikari.maximum-pool-size: 4
+  url: jdbc:postgresql://ec2-52-3-200-138.compute-1.amazonaws.com/d7bjks1c43p2ga?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+  username: ilguwqxlhhdega
+  password: 6a1f55e4c6e35f6ce056655f867f73152c993aa60d078d60a809413976d2b926
+  platform: postgres
+  driver-class-name: org.postgresql.Driver
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/fastcampus_sns_project?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: spring
+#    password: spring123
 #
-#spring.datasource:
-#  hikari.maximum-pool-size: 4
-#  url:
-#  username:
-#  password:
-#  platform: postgres
-#  driver-class-name: org.postgresql.Driver
-
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fastcampus_sns_project?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: spring
-    password: spring123
-
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      format_sql: true
-      ddl-auto: update
-    properties:
-      hibernate:
-        jdbc:
-          time_zone: Asia/Seoul
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    open-in-view: false
+#    show-sql: true
+#    hibernate:
+#      format_sql: true
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        jdbc:
+#          time_zone: Asia/Seoul
+#
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: DEBUG
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE

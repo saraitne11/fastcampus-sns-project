@@ -1,8 +1,10 @@
 package com.fastcampus.snsproject.controller;
 
 import com.fastcampus.snsproject.controller.request.UserJoinRequest;
+import com.fastcampus.snsproject.controller.request.UserLoginRequest;
 import com.fastcampus.snsproject.controller.response.Response;
 import com.fastcampus.snsproject.controller.response.UserJoinResponse;
+import com.fastcampus.snsproject.controller.response.UserLoginResponse;
 import com.fastcampus.snsproject.model.User;
 import com.fastcampus.snsproject.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +22,17 @@ public class UserController {
 
     // TODO : implement
     @PostMapping("/join")
-    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest request){
+    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest request) {
         // join
         User user = userService.join(request.getUserName(), request.getPassword());
         UserJoinResponse response = UserJoinResponse.fromUser(user);
+        return Response.success(response);
+    }
+
+    @PostMapping("/login")
+    public Response<UserLoginResponse> login(@RequestBody UserLoginRequest request) {
+        String token = userService.login(request.getUserName(), request.getPassword());
+        UserLoginResponse response = new UserLoginResponse(token);
         return Response.success(response);
     }
 }
