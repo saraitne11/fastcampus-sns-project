@@ -62,9 +62,8 @@ public class UserService {
         return JwtUtils.generateToken(userName, secretKey, expiredTimeMs);
     }
 
-    public Page<Alarm> alarmList(String userName, Pageable pageable) {
-        UserEntity userEntity = getUserEntityOrException(userName);
-        return alarmEntityRepository.findAllByUser(userEntity, pageable).map(Alarm::fromEntity);
+    public Page<Alarm> alarmList(Integer userId, Pageable pageable) {
+        return alarmEntityRepository.findAllByUserId(userId, pageable).map(Alarm::fromEntity);
     }
 
     private UserEntity getUserEntityOrException(String userName) {
